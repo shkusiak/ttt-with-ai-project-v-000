@@ -53,6 +53,7 @@ class Game
     current_move = player.move(@board)
     if @board.valid_move?(current_move)
       @board.update(current_move, player)
+      @board.display
       #@board.display
     else
       turn
@@ -68,6 +69,26 @@ class Game
       elsif draw?
         puts "Cat's Game!"
       end
+  end
+
+  def start
+    puts "Welcome to Tic Tac Toe!"
+    puts "How many players? Please enter 0-2:"
+    input = gets.strip.to_i
+
+    if input == 0
+      game = Game.new(Players::Computer.new("X"),Players::Computer.new("O"))
+    elsif input == 1
+      game = Game.new(Players::Human.new("X"), Players::Computer.new("O"))
+    elsif input == 2
+      game = Game.new
+    else
+      "Please enter 0-2:"
+    end
+
+    until game.won?
+      game.play
+    end
   end
 
 end
